@@ -1,8 +1,8 @@
 package pm.resilience4j;
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
-import io.github.resilience4j.circuitbreaker.CircuitBreakerOpenException;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.vavr.CheckedConsumer;
 import org.junit.Before;
@@ -44,7 +44,7 @@ public class CircuitBreakerRegistryTest {
             consumeCatchingExampleException(consumerThrowingExceptionWithCircuitBreaker);
             fail("Should have thrown a CircuitBreakerOpenException");
         }
-        catch(CircuitBreakerOpenException e) {
+        catch(CallNotPermittedException e) {
             // The circuit has tripped as expected.
         }
     }
@@ -63,7 +63,7 @@ public class CircuitBreakerRegistryTest {
             consumeCatchingExampleException(consumerThrowingExceptionWithCircuitBreaker);
             fail("Should have thrown a CircuitBreakerOpenException");
         }
-        catch(CircuitBreakerOpenException e) {
+        catch(CallNotPermittedException e) {
             // The circuit has tripped as expected.
         }
     }

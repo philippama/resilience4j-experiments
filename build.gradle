@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile "io.github.resilience4j:resilience4j-circuitbreaker:0.10.0"
+    compile "io.github.resilience4j:resilience4j-circuitbreaker:${resilience4jVersion}"
 
     testCompile 'junit:junit:4.12'
 }

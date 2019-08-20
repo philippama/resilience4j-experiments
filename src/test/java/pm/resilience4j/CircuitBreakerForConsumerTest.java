@@ -1,8 +1,8 @@
 package pm.resilience4j;
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
-import io.github.resilience4j.circuitbreaker.CircuitBreakerOpenException;
 import io.vavr.CheckedConsumer;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +66,7 @@ public class CircuitBreakerForConsumerTest {
         consumeSuccessfully(successCount);
     }
 
-    @Test(expected = CircuitBreakerOpenException.class)
+    @Test(expected = CallNotPermittedException.class)
     public void circuitIsBrokenWhenEnoughExceptionsThrownAndRingBufferFull() throws Throwable {
 
         tripCircuitBreaker();
@@ -94,13 +94,13 @@ public class CircuitBreakerForConsumerTest {
         consumeSuccessfully(successCount);
     }
 
-    @Test(expected = CircuitBreakerOpenException.class)
+    @Test(expected = CallNotPermittedException.class)
     public void inHalfOpenStateExceptionReTripsCircuitBreaker() throws Throwable {
 
         try {
             tripCircuitBreaker();
         }
-        catch (CircuitBreakerOpenException e) {
+        catch (CallNotPermittedException e) {
             System.out.println("Circuit breaker tripped");
         }
         Thread.sleep(SMALL_WAIT_DURATION_IN_OPEN_STATE_MILLIS + 100);
@@ -115,7 +115,7 @@ public class CircuitBreakerForConsumerTest {
         try {
             tripCircuitBreaker();
         }
-        catch (CircuitBreakerOpenException e) {
+        catch (CallNotPermittedException e) {
             System.out.println("Circuit breaker tripped");
         }
         Thread.sleep(SMALL_WAIT_DURATION_IN_OPEN_STATE_MILLIS + 100);
